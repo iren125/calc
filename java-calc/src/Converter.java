@@ -1,9 +1,10 @@
 import java.util.TreeMap;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class Converter {
-    TreeMap<Character, Integer> romanKeyMap = new TreeMap<>();
-    TreeMap<Integer, String> arabianKeyMap = new TreeMap<>();
-
+    private final TreeMap<Character, Integer> romanKeyMap = new TreeMap<>();
+    private final TreeMap<Integer, String> arabianKeyMap = new TreeMap<>();
 
     public Converter() {
         romanKeyMap.put('I', 1);
@@ -29,43 +30,41 @@ public class Converter {
         arabianKeyMap.put(1, "I");
     }
 
-
     public boolean isRoman(String number) {
-
-        return romanKeyMap.containsKey(number.charAt(0));
+        return number.matches("^(M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))$");
     }
 
     public String intToRoman(int number) {
-        String roman = "";
+        if (number < 1 || number > 10) {
+            throw new IllegalArgumentException("Число должно быть в диапазоне от 1 до 10");
+        }
+        StringBuilder roman = new StringBuilder();
         int arabianKey;
-        do {
+        while (number > 0) {
             arabianKey = arabianKeyMap.floorKey(number);
-            roman += arabianKeyMap.get(arabianKey);
+            roman.append(arabianKeyMap.get(arabianKey));
             number -= arabianKey;
-        } while (number != 0);
-        return roman;
+        }
+        return roman.toString();
     }
 
-    public int romanToInt(String s){
+    public int romanToInt(String s) {
+        if (!isRoman(s)) {
+            throw new IllegalArgumentException("Некорректное римское число");
+        }
         int end = s.length() - 1;
         char[] arr = s.toCharArray();
         int arabian;
         int result = romanKeyMap.get(arr[end]);
         for (int i = end - 1; i >= 0; i--) {
             arabian = romanKeyMap.get(arr[i]);
-
             if (arabian < romanKeyMap.get(arr[i + 1])) {
                 result -= arabian;
             } else {
                 result += arabian;
             }
-
-
         }
-
-
         return result;
     }
 }
-
 
