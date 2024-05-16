@@ -1,6 +1,4 @@
 import java.util.TreeMap;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 public class Converter {
     private final TreeMap<Character, Integer> romanKeyMap = new TreeMap<>();
@@ -31,7 +29,7 @@ public class Converter {
     }
 
     public boolean isRoman(String number) {
-        return number.matches("^(M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))$");
+        return romanKeyMap.containsKey(number.charAt(0));
     }
 
     public String intToRoman(int number) {
@@ -49,9 +47,6 @@ public class Converter {
     }
 
     public int romanToInt(String s) {
-        if (!isRoman(s)) {
-            throw new IllegalArgumentException("Некорректное римское число");
-        }
         int end = s.length() - 1;
         char[] arr = s.toCharArray();
         int arabian;
@@ -67,4 +62,3 @@ public class Converter {
         return result;
     }
 }
-
