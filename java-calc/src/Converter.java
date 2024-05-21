@@ -33,9 +33,8 @@ public class Converter {
     }
 
     public String intToRoman(int number) {
-        if (number < 1 || number > 10) {
-            throw new IllegalArgumentException("Число должно быть в диапазоне от 1 до 10");
-        }
+        //if (number < 1 || number > 10) {
+           // throw new IllegalArgumentException("Число должно быть в диапазоне от 1 до 10");
         StringBuilder roman = new StringBuilder();
         int arabianKey;
         while (number > 0) {
