@@ -65,6 +65,9 @@ public class Main {
                     result = a / b;
                     break;
             }
+            if (result < 1 && isRoman) {
+                throw new Exception("Результат не может быть меньше 1 для римских чисел");
+            }
 
             if (isRoman) {
                 return converter.intToRoman(result);
